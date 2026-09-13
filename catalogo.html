@@ -3307,125 +3307,6 @@ Mantiene el diseño compacto, pero evita textos demasiado chicos.
 CARRITO — BENEFICIO TRANSFERENCIA / EFECTIVO DESTACADO
 ===================================================== */
 
-/* ================= PAGO A CRÉDITO — 2 CUOTAS ================= */
-#pagoCredito{
-  position:relative;
-  overflow:visible;
-}
-
-#pagoCredito::after{
-  content:"2 CUOTAS SIN INTERÉS";
-  position:absolute;
-  top:-8px;
-  right:10px;
-  padding:4px 7px;
-  border-radius:999px;
-  background:linear-gradient(135deg,#ffe08a,#c9982e);
-  color:#121212;
-  font-size:7px;
-  line-height:1;
-  font-weight:950;
-  letter-spacing:.55px;
-  box-shadow:0 6px 16px rgba(0,0,0,.35);
-}
-
-#pagoCredito.activo{
-  border-color:#d8ad3f;
-  color:#fff7da;
-  background:
-    radial-gradient(circle at 50% 0%,rgba(227,189,99,.20),transparent 68%),
-    linear-gradient(145deg,rgba(200,157,56,.25),rgba(74,54,8,.18));
-  box-shadow:
-    0 10px 28px rgba(200,157,56,.15),
-    inset 0 0 0 1px rgba(255,225,138,.08);
-}
-
-#pagoCredito.activo small{
-  color:#f0c85f;
-  font-weight:900;
-}
-
-.carrito-resumen.credito-activa{
-  border-color:rgba(82,214,129,.30);
-  background:
-    radial-gradient(circle at 88% 20%,rgba(82,214,129,.07),transparent 30%),
-    linear-gradient(145deg,rgba(17,17,17,.98),rgba(11,11,11,.98));
-}
-
-.beneficio-credito{
-  margin:10px 0 14px;
-  padding:13px 14px;
-  border:1px solid rgba(82,214,129,.34);
-  border-radius:13px;
-  background:
-    radial-gradient(circle at 90% 100%,rgba(82,214,129,.09),transparent 35%),
-    linear-gradient(145deg,rgba(82,214,129,.10),rgba(82,214,129,.035));
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.018);
-}
-
-.beneficio-credito-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-}
-
-.beneficio-credito-kicker{
-  color:#8fe3ad;
-  font-size:9px;
-  font-weight:950;
-  letter-spacing:1px;
-}
-
-.beneficio-credito-badge{
-  padding:5px 8px;
-  border-radius:999px;
-  background:#52d681;
-  color:#07130c;
-  font-size:8px;
-  font-weight:950;
-  white-space:nowrap;
-}
-
-.beneficio-credito-cuota{
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  gap:14px;
-  margin-top:10px;
-}
-
-.beneficio-credito-cuota span{
-  color:#aaa;
-  font-size:10px;
-  line-height:1.45;
-}
-
-.beneficio-credito-cuota strong{
-  color:#52d681;
-  font-size:24px;
-  line-height:1;
-  font-weight:950;
-  letter-spacing:-.5px;
-  white-space:nowrap;
-}
-
-.beneficio-credito-copy{
-  margin-top:9px;
-  color:#737373;
-  font-size:8px;
-  line-height:1.45;
-}
-
-@media(max-width:700px){
-  #pagoCredito::after{
-    right:7px;
-    padding:4px 6px;
-    font-size:6.5px;
-  }
-  .beneficio-credito-cuota strong{font-size:21px;}
-}
-
 #pagoTransferencia{
   position:relative;
   overflow:visible;
@@ -3630,16 +3511,7 @@ CARRITO — BENEFICIO TRANSFERENCIA / EFECTIVO DESTACADO
     font-size:22px;
   }
 
- .resumen-total.credito > span:first-child{
-  color:#8fe3ad;
-}
-
-.resumen-total.credito span:last-child{
-  color:#52d681;
-  text-shadow:0 0 16px rgba(82,214,129,.12);
-}
-
- .resumen-total.transferencia span:last-child{
+  .resumen-total.transferencia span:last-child{
     font-size:28px;
   }
 }
@@ -7317,7 +7189,7 @@ onclick="cambiarPago('credito')">
 📱 Crédito / Mercado Pago
 
 <small>
-2 cuotas sin interés
+Precio de lista
 </small>
 
 </button>
@@ -10104,72 +9976,6 @@ totalLista-totalPedido
 0;
 
 
-const cuotaCredito=
-modoActual==="particular" &&
-formaPago==="credito"
-?
-Math.round(totalPedido/2)
-:
-0;
-
-const bloqueBeneficioCredito=
-
-modoActual==="particular" &&
-formaPago==="credito"
-?
-`
-
-<div class="resumen-precio-lista">
-
-  <span>
-    Total de lista
-  </span>
-
-  <strong>
-    $${Math.round(totalLista).toLocaleString("es-AR")}
-  </strong>
-
-</div>
-
-<div class="beneficio-credito">
-
-  <div class="beneficio-credito-top">
-
-    <div class="beneficio-credito-kicker">
-      💳 BENEFICIO NERÓS
-    </div>
-
-    <div class="beneficio-credito-badge">
-      2 CUOTAS
-    </div>
-
-  </div>
-
-  <div class="beneficio-credito-cuota">
-
-    <span>
-      Pagá tu compra en<br>
-      2 cuotas sin interés
-    </span>
-
-    <strong>
-      $${cuotaCredito.toLocaleString("es-AR")}
-    </strong>
-
-  </div>
-
-  <div class="beneficio-credito-copy">
-    El total se mantiene a precio de lista. No hay recargo por pagar en 2 cuotas.
-  </div>
-
-</div>
-
-`
-:
-
-"";
-
-
 const bloqueBeneficioTransferencia=
 
 modoActual==="particular" &&
@@ -10237,12 +10043,6 @@ modoActual==="particular" &&
 formaPago==="transferencia"
 );
 
-resumen.classList.toggle(
-"credito-activa",
-modoActual==="particular" &&
-formaPago==="credito"
-);
-
 
 resumen.innerHTML=`
 
@@ -10260,9 +10060,7 @@ ${total}
 
 ${bloqueBeneficioTransferencia}
 
-${bloqueBeneficioCredito}
-
-<div class="resumen-total ${modoActual==="particular" && formaPago==="transferencia" ? "transferencia" : (modoActual==="particular" && formaPago==="credito" ? "credito" : "")}">
+<div class="resumen-total ${modoActual==="particular" && formaPago==="transferencia" ? "transferencia" : ""}">
 
 <span>
 
