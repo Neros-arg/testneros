@@ -102,6 +102,95 @@ z-index:120;
 
 button,input{font-family:inherit;}
 
+
+/* ================= PRELOADER NERÓS ================= */
+
+#nerosPreloader{
+position:fixed;
+inset:0;
+z-index:99999;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#050505;
+opacity:1;
+visibility:visible;
+transition:opacity .55s ease,visibility .55s ease;
+}
+
+#nerosPreloader.oculto{
+opacity:0;
+visibility:hidden;
+pointer-events:none;
+}
+
+.preloader-contenido{
+width:min(300px,78vw);
+text-align:center;
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+.preloader-logo{
+width:min(190px,58vw);
+height:auto;
+display:block;
+object-fit:contain;
+opacity:0;
+transform:translateY(8px) scale(.96);
+animation:nerosLogoIn .85s cubic-bezier(.2,.8,.2,1) .08s forwards;
+filter:drop-shadow(0 0 18px rgba(200,157,56,.08));
+}
+
+.preloader-linea{
+width:0;
+height:1px;
+margin-top:30px;
+background:linear-gradient(90deg,transparent,#c89d38,#e3bd63,#c89d38,transparent);
+animation:nerosLineaIn .85s ease .35s forwards;
+}
+
+.preloader-texto{
+margin-top:13px;
+font-size:8px;
+font-weight:900;
+letter-spacing:3px;
+color:#666;
+opacity:0;
+animation:nerosTextoIn .7s ease .65s forwards,nerosTextoPulse 1.8s ease-in-out 1.35s infinite;
+}
+
+@keyframes nerosLogoIn{
+to{opacity:1;transform:translateY(0) scale(1);}
+}
+
+@keyframes nerosLineaIn{
+to{width:245px;max-width:78vw;}
+}
+
+@keyframes nerosTextoIn{
+to{opacity:1;}
+}
+
+@keyframes nerosTextoPulse{
+0%,100%{opacity:.48;}
+50%{opacity:1;}
+}
+
+@media(prefers-reduced-motion:reduce){
+#nerosPreloader,
+.preloader-logo,
+.preloader-linea,
+.preloader-texto{
+animation:none!important;
+transition:none!important;
+}
+.preloader-logo{opacity:1;transform:none;}
+.preloader-linea{width:245px;max-width:78vw;}
+.preloader-texto{opacity:1;}
+}
+
 /* ================= PROMO ================= */
 
 .promo-strip{
@@ -5877,6 +5966,21 @@ CARRITO — BENEFICIO TRANSFERENCIA / EFECTIVO DESTACADO
 
 <body>
 
+
+<div id="nerosPreloader" aria-label="Cargando catálogo">
+  <div class="preloader-contenido">
+    <img
+      class="preloader-logo"
+      src="nerosfrase.png"
+      alt="NERÓS"
+      onerror="this.style.display='none';"
+    >
+    <div class="preloader-linea"></div>
+    <div class="preloader-texto">CARGANDO CATÁLOGO</div>
+  </div>
+</div>
+
+
 <div class="promo-strip">
 
 <div class="promo-track">
@@ -6957,7 +7061,187 @@ let precioMaximoCatalogo=0;
 API
 ========================================================= */
 
-fetch(API)
+const CATALOGO_CACHE_KEY=
+"nerosCatalogoCacheV2";
+
+const CATALOGO_CACHE_TTL=
+5*60*1000;
+
+let catalogoCacheDisponible=false;
+let preloaderOcultado=false;
+
+function ocultarPreloader(){
+
+if(preloaderOcultado){
+return;
+}
+
+preloaderOcultado=true;
+
+const preloader=
+document.getElementById("nerosPreloader");
+
+if(preloader){
+preloader.classList.add("oculto");
+
+setTimeout(()=>{
+if(preloader.parentNode){
+preloader.remove();
+}
+},650);
+}
+
+}
+
+function limpiarProductosSinStock(data){
+
+if(!Array.isArray(data)){
+return [];
+}
+
+return data.filter(producto=>{
+
+const stock=
+String(
+producto &&
+producto.stock ||
+""
+)
+.toLowerCase()
+.trim();
+
+return !(
+stock.includes("sin stock") ||
+stock.includes("agotado")
+);
+
+});
+
+}
+
+function procesarCatalogo(data){
+
+const catalogoLimpio=
+limpiarProductosSinStock(data);
+
+perfumes=
+catalogoLimpio;
+
+calcularPrecioMaximoCatalogo();
+actualizarFiltroPrecioUI();
+aplicarFiltrosCatalogo();
+
+}
+
+function cargarCatalogoDesdeCache(){
+
+try{
+
+const raw=
+localStorage.getItem(
+CATALOGO_CACHE_KEY
+);
+
+if(!raw){
+return false;
+}
+
+const cache=
+JSON.parse(raw);
+
+if(
+!cache ||
+!Array.isArray(cache.data)
+){
+return false;
+}
+
+if(
+Date.now()-
+Number(cache.timestamp || 0)
+>
+CATALOGO_CACHE_TTL
+){
+return false;
+}
+
+procesarCatalogo(cache.data);
+catalogoCacheDisponible=true;
+
+return true;
+
+}catch(error){
+
+console.warn(
+"Cache de catálogo no disponible:",
+error
+);
+
+return false;
+
+}
+
+}
+
+function guardarCatalogoEnCache(data){
+
+try{
+
+localStorage.setItem(
+CATALOGO_CACHE_KEY,
+JSON.stringify({
+timestamp:Date.now(),
+data:data
+})
+);
+
+}catch(error){
+
+console.warn(
+"No se pudo guardar el catálogo en caché:",
+error
+);
+
+}
+
+}
+
+const habiaCache=
+cargarCatalogoDesdeCache();
+
+if(habiaCache){
+
+setTimeout(
+ocultarPreloader,
+420
+);
+
+}
+
+const controller=
+typeof AbortController!=="undefined"
+?
+new AbortController()
+:
+null;
+
+const timeoutId=
+setTimeout(()=>{
+
+if(controller){
+controller.abort();
+}
+
+},8000);
+
+fetch(
+API,
+controller
+?
+{signal:controller.signal}
+:
+undefined
+)
 
 .then(respuesta=>{
 
@@ -6984,17 +7268,23 @@ throw new Error(
 
 }
 
-perfumes=data;
+guardarCatalogoEnCache(data);
+procesarCatalogo(data);
 
-calcularPrecioMaximoCatalogo();
-actualizarFiltroPrecioUI();
-aplicarFiltrosCatalogo();
+catalogoCacheDisponible=true;
+
+ocultarPreloader();
 
 })
 
 .catch(error=>{
 
-console.error(error);
+console.error(
+"Error cargando catálogo:",
+error
+);
+
+if(!catalogoCacheDisponible){
 
 document
 .getElementById("productos")
@@ -7009,9 +7299,32 @@ color:#ff5a5a;
 
 No se pudieron cargar los productos.
 
+<br>
+
+<span style="
+display:block;
+margin-top:8px;
+color:#777;
+font-size:11px;
+">
+
+Intentá actualizar la página.
+
+</span>
+
 </div>
 
 `;
+
+}
+
+ocultarPreloader();
+
+})
+
+.finally(()=>{
+
+clearTimeout(timeoutId);
 
 });
 
@@ -7741,6 +8054,14 @@ producto.stock ||
 )
 .toLowerCase()
 .trim();
+
+/* Nunca mostrar productos agotados o sin stock. */
+if(
+stock.includes("sin stock") ||
+stock.includes("agotado")
+){
+return false;
+}
 
 let disponibilidad=
 filtroRapido!=="todos"
@@ -8490,6 +8811,7 @@ imagen
 src="${escapeAttr(imagen)}"
 alt="${escapeAttr(nombre)}"
 loading="lazy"
+decoding="async"
 onerror="this.style.display='none';">
 `
 
