@@ -2025,6 +2025,98 @@ background:rgba(255,255,255,.022);
 }
 .resumen-linea{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#aaa;margin-bottom:8px;}
 .resumen-linea strong{color:#fff;}
+
+/* ================= BENEFICIO CRÉDITO ================= */
+.beneficio-credito{
+  position:relative;
+  overflow:hidden;
+  margin-top:12px;
+  padding:14px;
+  border:1px solid rgba(22,169,234,.34);
+  border-radius:14px;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(22,169,234,.16),transparent 38%),
+    linear-gradient(145deg,rgba(22,169,234,.09),rgba(8,20,28,.46));
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.20),
+    inset 0 1px 0 rgba(255,255,255,.035);
+}
+.beneficio-credito::after{
+  content:"";
+  position:absolute;
+  width:130px;
+  height:130px;
+  border-radius:50%;
+  right:-70px;
+  bottom:-80px;
+  background:rgba(22,169,234,.055);
+  pointer-events:none;
+}
+.beneficio-credito-top{
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.beneficio-credito-kicker{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:#9edcff;
+  font-size:9px;
+  font-weight:950;
+  letter-spacing:.85px;
+  text-transform:uppercase;
+}
+.beneficio-credito-badge{
+  flex:0 0 auto;
+  padding:5px 8px;
+  border-radius:999px;
+  background:#16a9ea;
+  color:#04131b;
+  font-size:8px;
+  line-height:1;
+  font-weight:950;
+  letter-spacing:.55px;
+}
+.beneficio-credito-cuotas{
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:14px;
+  margin-top:12px;
+}
+.beneficio-credito-cuotas span{
+  color:#b9b9b9;
+  font-size:11px;
+  line-height:1.35;
+}
+.beneficio-credito-cuotas strong{
+  color:#5cc8f5;
+  font-size:24px;
+  line-height:1;
+  font-weight:950;
+  letter-spacing:-.4px;
+}
+.beneficio-credito-copy{
+  position:relative;
+  z-index:1;
+  margin-top:9px;
+  color:#9aa5aa;
+  font-size:9px;
+  line-height:1.5;
+}
+.resumen-total.credito{
+  border-top-color:rgba(22,169,234,.30);
+}
+.resumen-total.credito span:last-child{
+  color:#5cc8f5;
+}
+
 .resumen-total{
 display:flex;
 justify-content:space-between;
@@ -7189,7 +7281,7 @@ onclick="cambiarPago('credito')">
 📱 Crédito / Mercado Pago
 
 <small>
-Precio de lista
+2 CUOTAS SIN INTERÉS · SOBRE PRECIO DE LISTA
 </small>
 
 </button>
@@ -10037,6 +10129,58 @@ formaPago==="transferencia"
 "";
 
 
+
+const cuotaCredito=
+modoActual==="particular" &&
+formaPago==="credito"
+?
+Math.round(totalLista/2)
+:
+0;
+
+const bloqueBeneficioCredito=
+modoActual==="particular" &&
+formaPago==="credito"
+?
+`
+
+<div class="beneficio-credito">
+
+  <div class="beneficio-credito-top">
+
+    <div class="beneficio-credito-kicker">
+      💳 BENEFICIO NERÓS
+    </div>
+
+    <div class="beneficio-credito-badge">
+      2 CUOTAS
+    </div>
+
+  </div>
+
+  <div class="beneficio-credito-cuotas">
+
+    <span>
+      Pagás en<br>
+      2 cuotas sin interés
+    </span>
+
+    <strong>
+      $${cuotaCredito.toLocaleString("es-AR")}
+    </strong>
+
+  </div>
+
+  <div class="beneficio-credito-copy">
+    Precio de lista · Sin recargo · 2 cuotas iguales.
+  </div>
+
+</div>
+
+`
+:
+"";
+
 resumen.classList.toggle(
 "transferencia-activa",
 modoActual==="particular" &&
@@ -10059,8 +10203,15 @@ ${total}
 </div>
 
 ${bloqueBeneficioTransferencia}
+${bloqueBeneficioCredito}
 
-<div class="resumen-total ${modoActual==="particular" && formaPago==="transferencia" ? "transferencia" : ""}">
+<div class="resumen-total ${
+  modoActual==="particular" && formaPago==="transferencia"
+  ? "transferencia"
+  : modoActual==="particular" && formaPago==="credito"
+  ? "credito"
+  : ""
+}">
 
 <span>
 
@@ -10077,6 +10228,23 @@ ${bloqueBeneficioTransferencia}
 
   <span class="resumen-total-label-secundario">
     CON 10% OFF APLICADO
+  </span>
+  `
+
+  :
+
+  modoActual==="particular" &&
+  formaPago==="credito"
+
+  ?
+
+  `
+  <span class="resumen-total-label-principal">
+    TOTAL
+  </span>
+
+  <span class="resumen-total-label-secundario">
+    PRECIO DE LISTA · 2 CUOTAS SIN INTERÉS
   </span>
   `
 
