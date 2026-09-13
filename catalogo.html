@@ -363,6 +363,20 @@ transition:none!important;
   }
 }
 
+/* ================= LLUVIA REAL — QUITAR FONDO BLANCO ================= */
+.lluvia-objeto img{
+  background:transparent!important;
+  border-radius:0!important;
+}
+
+.lluvia-objeto::after{
+  display:none!important;
+}
+
+.lluvia-objeto{
+  filter:drop-shadow(0 14px 18px rgba(0,0,0,.68)) drop-shadow(0 0 8px rgba(200,157,56,.07));
+}
+
 /* ================= PROMO ================= */
 
 .promo-strip{
@@ -7292,6 +7306,77 @@ stock.includes("agotado")
 
 }
 
+/* ================= RECORTE AUTOMÁTICO DE FONDO BLANCO ================= */
+function quitarFondoBlancoImagen(img,objeto){
+
+try{
+
+if(!img || !img.naturalWidth || !img.naturalHeight){
+return;
+}
+
+const canvas=document.createElement("canvas");
+canvas.width=img.naturalWidth;
+canvas.height=img.naturalHeight;
+
+const ctx=canvas.getContext("2d",{willReadFrequently:true});
+
+if(!ctx){
+return;
+}
+
+ctx.drawImage(img,0,0);
+
+let datos;
+
+try{
+  datos=ctx.getImageData(0,0,canvas.width,canvas.height);
+}catch(error){
+  /* Si el servidor no permite canvas/CORS, dejamos la foto original. */
+  console.warn("No se pudo recortar el fondo de una imagen NERÓS:",error);
+  return;
+}
+
+const pixeles=datos.data;
+
+for(let i=0;i<pixeles.length;i+=4){
+
+const r=pixeles[i];
+const g=pixeles[i+1];
+const b=pixeles[i+2];
+
+const minimo=Math.min(r,g,b);
+const maximo=Math.max(r,g,b);
+const brillo=(r+g+b)/3;
+const diferencia=maximo-minimo;
+
+/*
+  Eliminamos blancos y grises MUY claros.
+  El umbral es conservador para no comerse las partes claras
+  del frasco, etiquetas o reflejos dorados.
+*/
+if(brillo>=244 && diferencia<=18){
+  pixeles[i+3]=0;
+}else if(brillo>=228 && diferencia<=14){
+  const fuerza=(244-brillo)/16;
+  pixeles[i+3]=Math.max(0,Math.min(255,Math.round(255*fuerza)));
+}
+
+}
+
+ctx.putImageData(datos,0,0);
+
+const recortada=canvas.toDataURL("image/png");
+
+img.src=recortada;
+objeto.classList.add("recortado");
+
+}catch(error){
+console.warn("Recorte de fondo NERÓS no disponible:",error);
+}
+
+}
+
 function prepararLluviaPerfumes(productos){
 
 const contenedor=
@@ -7462,6 +7547,16 @@ img.alt="";
 img.title=nombre;
 img.loading="eager";
 img.decoding="async";
+
+img.crossOrigin="anonymous";
+
+img.addEventListener(
+"load",
+()=>{
+  quitarFondoBlancoImagen(img,objeto);
+},
+{once:true}
+);
 
 img.addEventListener(
 "error",
