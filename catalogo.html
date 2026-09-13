@@ -390,6 +390,23 @@ transition:none!important;
 }
 
 
+/* ================= OPTIMIZACIÓN DE CARGA ================= */
+.card{
+  content-visibility:auto;
+  contain-intrinsic-size:380px;
+}
+.imagen-producto img{
+  content-visibility:auto;
+}
+
+@media(max-width:1100px){
+  .card{contain-intrinsic-size:330px;}
+}
+
+@media(max-width:700px){
+  .card{contain-intrinsic-size:300px;}
+}
+
 /* ================= PROMO ================= */
 
 .promo-strip{
@@ -7396,15 +7413,11 @@ if(
 return false;
 }
 
-if(
-Date.now()-
-Number(cache.timestamp || 0)
->
-CATALOGO_CACHE_TTL
-){
-return false;
-}
-
+/*
+  Usamos la caché aunque tenga más de 5 minutos: así el catálogo
+  aparece instantáneamente y la API se encarga de actualizarlo
+  en segundo plano.
+*/
 procesarCatalogo(cache.data);
 catalogoCacheDisponible=true;
 
@@ -7451,10 +7464,8 @@ cargarCatalogoDesdeCache();
 
 if(habiaCache){
 
-setTimeout(
-ocultarPreloader,
-420
-);
+/* La caché ya permite mostrar el catálogo sin esperar la API. */
+ocultarPreloader();
 
 }
 
@@ -8987,7 +8998,7 @@ fin
 
 contenedor.innerHTML="";
 
-pagina.forEach(producto=>{
+pagina.forEach((producto,index)=>{
 
 const nombre=
 producto.perfume ||
@@ -9050,8 +9061,9 @@ imagen
 <img
 src="${escapeAttr(imagen)}"
 alt="${escapeAttr(nombre)}"
-loading="lazy"
+loading="${index < 8 ? "eager" : "lazy"}"
 decoding="async"
+fetchpriority="${index < 4 ? "high" : "auto"}"
 onerror="this.style.display='none';">
 `
 
