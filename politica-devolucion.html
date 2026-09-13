@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Política de cambios y devoluciones | NERÓS</title>
+<link rel="icon" type="image/png" href="favicon.png">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --negro:#080808;
+  --dorado:#c89d38;
+  --dorado-claro:#e3bd63;
+  --gris:#aaa;
+}
+html{scroll-behavior:smooth}
+body{
+  background:
+    linear-gradient(rgba(5,5,5,.88),rgba(5,5,5,.94)),
+    url("fondo-explora.png") center/cover fixed;
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
+}
+a{text-decoration:none}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  height:92px;
+  border-bottom:1px solid #222;
+  background:rgba(5,5,5,.91);
+  backdrop-filter:blur(16px);
+}
+.header-inner{
+  max-width:1250px;
+  height:100%;
+  margin:auto;
+  padding:0 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.header img{
+  width:150px;
+  max-height:70px;
+  object-fit:contain;
+}
+.volver{
+  color:#ddd;
+  border:1px solid #333;
+  border-radius:999px;
+  padding:11px 16px;
+  font-size:12px;
+  font-weight:800;
+  transition:.2s;
+}
+.volver:hover{
+  border-color:var(--dorado);
+  color:var(--dorado-claro);
+}
+
+.hero{
+  max-width:1050px;
+  margin:auto;
+  padding:72px 22px 32px;
+  text-align:center;
+}
+.hero small{
+  color:var(--dorado-claro);
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:3px;
+}
+.hero h1{
+  font-family:Georgia,serif;
+  font-size:clamp(38px,6vw,65px);
+  font-weight:400;
+  margin:12px 0 16px;
+}
+.hero p{
+  max-width:790px;
+  margin:auto;
+  color:#bbb;
+  font-size:15px;
+  line-height:1.75;
+}
+
+.contenido{
+  max-width:1050px;
+  margin:auto;
+  padding:20px 22px 80px;
+}
+.bloque{
+  margin-bottom:16px;
+  padding:28px;
+  border:1px solid #2a2a2a;
+  border-radius:20px;
+  background:rgba(10,10,10,.93);
+  backdrop-filter:blur(10px);
+  box-shadow:0 20px 55px rgba(0,0,0,.28);
+}
+.bloque.destacado{
+  border-color:rgba(227,189,99,.48);
+  background:
+    linear-gradient(135deg,rgba(200,157,56,.12),rgba(8,8,8,.94));
+}
+.bloque h2{
+  font-family:Georgia,serif;
+  font-weight:400;
+  font-size:28px;
+  margin-bottom:12px;
+}
+.bloque h3{
+  font-size:16px;
+  margin:20px 0 8px;
+  color:#eee;
+}
+.bloque p,.bloque li{
+  color:#b6b6b6;
+  font-size:14px;
+  line-height:1.75;
+}
+.bloque p + p{
+  margin-top:10px;
+}
+.bloque ul{
+  margin:10px 0 0 20px;
+}
+.bloque b{
+  color:var(--dorado-claro);
+}
+.nota{
+  margin-top:14px;
+  color:#777!important;
+  font-size:11px!important;
+}
+.accion{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+.btn{
+  display:inline-flex;
+  min-height:48px;
+  padding:0 19px;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:900;
+  transition:.2s;
+}
+.btn.dorado{
+  color:#111;
+  background:linear-gradient(135deg,#f1c65a,#d9a72e,#f2ca62);
+}
+.btn.dorado:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.08);
+}
+.btn.oscuro{
+  color:#fff;
+  border:1px solid #3a3a3a;
+  background:#111;
+}
+.btn.oscuro:hover{
+  border-color:var(--dorado);
+  color:var(--dorado-claro);
+}
+
+.footer{
+  border-top:1px solid #222;
+  background:#050505;
+  padding:35px 20px;
+  text-align:center;
+}
+.footer img{
+  width:120px;
+  margin-bottom:10px;
+}
+.footer p{
+  color:#777;
+  font-size:10px;
+  line-height:1.6;
+}
+
+@media(max-width:600px){
+  .header{height:78px}
+  .header img{width:120px}
+  .volver{font-size:10px;padding:9px 12px}
+  .hero{padding-top:50px}
+  .bloque{padding:21px 18px}
+  .accion{flex-direction:column}
+  .btn{width:100%}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html">
+      <img src="logo%20neros.png" alt="NERÓS">
+    </a>
+    <a class="volver" href="index.html">← VOLVER A NERÓS</a>
+  </div>
+</header>
+
+<section class="hero">
+  <small>INFORMACIÓN PARA TU COMPRA</small>
+  <h1>Política de cambios y devoluciones</h1>
+  <p>
+    Queremos que tengas información clara antes y después de comprar.
+    Esta política complementa —y no limita— los derechos que correspondan
+    conforme a la normativa de defensa del consumidor vigente.
+  </p>
+</section>
+
+<main class="contenido">
+
+  <section class="bloque destacado" id="arrepentimiento">
+    <h2>↩️ Derecho de arrepentimiento</h2>
+
+    <p>
+      En compras realizadas a distancia o por internet podés ejercer el
+      <b>derecho de arrepentimiento dentro de los 10 días corridos</b>
+      contados desde la entrega del producto o la celebración del contrato,
+      según corresponda conforme a la normativa vigente.
+    </p>
+
+    <p>
+      El ejercicio de este derecho no tiene penalidad. Cuando corresponda,
+      los gastos de devolución quedan a cargo del vendedor.
+    </p>
+
+    <p>
+      Este derecho puede tener excepciones legales según la naturaleza del
+      producto o si el bien fue efectivamente utilizado o consumido.
+    </p>
+
+    <div class="accion">
+      <a class="btn dorado"
+         href="https://wa.me/5493417830300?text=Hola%20NER%C3%93S.%20Quiero%20ejercer%20mi%20derecho%20de%20arrepentimiento%20sobre%20una%20compra."
+         target="_blank">
+        BOTÓN DE ARREPENTIMIENTO
+      </a>
+
+      <a class="btn oscuro" href="catalogo.html">
+        VOLVER AL CATÁLOGO
+      </a>
+    </div>
+  </section>
+
+  <section class="bloque">
+    <h2>🧴 Perfumería: fallas o defectos</h2>
+
+    <p>
+      Si recibís un perfume con una <b>falla o defecto</b>, por ejemplo un
+      problema de atomizador, pérdida, daño en el envase o un inconveniente
+      atribuible al producto, contactanos para revisar el caso y gestionar
+      la solución que corresponda.
+    </p>
+
+    <p>
+      Para agilizar la gestión, te podemos solicitar fotos o video del
+      producto y del inconveniente detectado.
+    </p>
+
+    <p>
+      Conservá, en lo posible, la caja, accesorios y comprobante de compra.
+      Estos elementos ayudan a identificar el producto y facilitar la gestión.
+    </p>
+  </section>
+
+  <section class="bloque">
+    <h2>📱 Electrónica, celulares, tablets y productos similares</h2>
+
+    <p>
+      Si un producto electrónico presenta una falla o defecto, el equipo
+      podrá requerir una <b>verificación técnica previa</b> para determinar
+      el origen del inconveniente y gestionar la solución correspondiente.
+    </p>
+
+    <p>
+      Según el caso, la solución podrá consistir en reparación, reemplazo,
+      cambio o la alternativa que corresponda conforme a la garantía y a la
+      normativa aplicable.
+    </p>
+
+    <p>
+      Los productos nuevos cuentan con la <b>garantía legal mínima vigente</b>.
+      Una verificación técnica no implica la pérdida ni la renuncia de los
+      derechos que correspondan al consumidor.
+    </p>
+
+    <p>
+      Si el producto requiere traslado para una gestión cubierta por garantía,
+      se procederá conforme a lo establecido por la normativa vigente.
+    </p>
+  </section>
+
+  <section class="bloque">
+    <h2>🔁 Cambios por elección del cliente</h2>
+
+    <p>
+      Fuera de los casos de arrepentimiento, falla, defecto o garantía,
+      NERÓS no garantiza cambios automáticos por
+      <b>gusto personal, preferencia de aroma, color, modelo, compatibilidad
+      u otras cuestiones de elección personal</b> una vez que el producto
+      haya sido utilizado, abierto o activado.
+    </p>
+
+    <p>
+      Si el producto se encuentra <b>nuevo, sin uso, completo y en su
+      presentación original</b>, podés consultarnos. Evaluaremos la posibilidad
+      de cambio según el tipo de producto, su estado y la disponibilidad.
+    </p>
+
+    <p>
+      Esta política comercial adicional no reemplaza ni restringe el derecho
+      de arrepentimiento, la garantía legal ni ningún otro derecho reconocido
+      al consumidor.
+    </p>
+  </section>
+
+  <section class="bloque">
+    <h2>📦 Estado del producto y documentación</h2>
+
+    <p>
+      Para facilitar cualquier gestión, recomendamos conservar:
+    </p>
+
+    <ul>
+      <li>El comprobante o constancia de compra.</li>
+      <li>El empaque original, cuando sea posible.</li>
+      <li>Accesorios, manuales y componentes incluidos.</li>
+      <li>Fotos o videos del inconveniente, si corresponde.</li>
+    </ul>
+
+    <p class="nota">
+      La falta de empaque original no será utilizada de forma automática para
+      desconocer derechos legales que pudieran corresponder por falla, defecto,
+      garantía o arrepentimiento.
+    </p>
+  </section>
+
+  <section class="bloque">
+    <h2>⏱️ Productos por pedido</h2>
+
+    <p>
+      Los productos identificados como <b>“Disponible por pedido”</b>
+      se solicitan especialmente para el cliente y tienen el plazo de entrega
+      informado en la tienda al momento de comprar.
+    </p>
+
+    <p>
+      La modalidad “por pedido” no elimina los derechos que legalmente
+      correspondan al consumidor. Si se trata de un producto expresamente
+      personalizado o realizado conforme a indicaciones particulares del
+      comprador, podrán aplicar las excepciones previstas por la normativa.
+    </p>
+  </section>
+
+  <section class="bloque">
+    <h2>💬 ¿Necesitás hacer una gestión?</h2>
+
+    <p>
+      Escribinos indicando tu nombre, producto y comprobante o referencia de
+      pedido. Si existe una falla, agregá una breve descripción y, si podés,
+      fotos o video del inconveniente.
+    </p>
+
+    <div class="accion">
+      <a class="btn dorado"
+         href="https://wa.me/5493417830300?text=Hola%20NER%C3%93S.%20Necesito%20realizar%20una%20consulta%20por%20una%20compra."
+         target="_blank">
+        HABLAR CON NERÓS
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <img src="logo%20neros.png" alt="NERÓS">
+  <p>
+    NERÓS Imports · Rosario, Santa Fe · Argentina<br>
+    Perfumería · Tecnología · Productos por pedido
+  </p>
+</footer>
+
+</body>
+</html>
