@@ -191,6 +191,205 @@ transition:none!important;
 .preloader-texto{opacity:1;}
 }
 
+
+/* ================= LLUVIA NERÓS EN CARGA ================= */
+
+#nerosPreloader{
+  overflow:hidden;
+  isolation:isolate;
+  background:
+    radial-gradient(circle at 50% 48%,rgba(200,157,56,.07),transparent 28%),
+    radial-gradient(circle at 50% 50%,#10100f 0%,#050505 58%,#020202 100%);
+}
+
+.preloader-lluvia{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  pointer-events:none;
+  perspective:900px;
+}
+
+.preloader-lluvia::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:4;
+  background:
+    radial-gradient(circle at 50% 50%,transparent 0%,rgba(5,5,5,.03) 24%,rgba(5,5,5,.52) 72%,rgba(5,5,5,.88) 100%);
+  pointer-events:none;
+}
+
+.lluvia-objeto{
+  position:absolute;
+  top:-130px;
+  left:var(--x);
+  width:var(--w);
+  height:var(--h);
+  opacity:0;
+  filter:drop-shadow(0 12px 20px rgba(0,0,0,.55));
+  transform:translate3d(0,0,0) rotate(var(--r));
+  animation:nerosRain var(--dur) linear var(--delay) infinite;
+  will-change:transform,opacity;
+}
+
+.lluvia-objeto::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:-12px;
+  width:34%;
+  height:16%;
+  transform:translateX(-50%);
+  border-radius:3px 3px 2px 2px;
+  background:linear-gradient(90deg,#6d5220,#e3bd63,#8f681f);
+  box-shadow:0 0 7px rgba(227,189,99,.18);
+}
+
+.lluvia-botella{
+  position:absolute;
+  inset:12% 0 0;
+  border:1px solid rgba(227,189,99,.58);
+  border-radius:13% 13% 18% 18%;
+  background:
+    linear-gradient(105deg,rgba(255,255,255,.18),transparent 18%,transparent 65%,rgba(227,189,99,.09)),
+    linear-gradient(160deg,#171717,#050505 72%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.035),
+    inset 8px 0 18px rgba(255,255,255,.025);
+}
+
+.lluvia-botella::after{
+  content:"N  NERÓS";
+  position:absolute;
+  left:12%;
+  right:12%;
+  top:42%;
+  padding:6px 2px;
+  border-top:1px solid rgba(200,157,56,.5);
+  border-bottom:1px solid rgba(200,157,56,.28);
+  color:#d9b65c;
+  font-family:Georgia,serif;
+  font-size:clamp(5px,.52vw,8px);
+  letter-spacing:1px;
+  text-align:center;
+  white-space:nowrap;
+}
+
+.lluvia-objeto.claro .lluvia-botella{
+  background:
+    linear-gradient(105deg,rgba(255,255,255,.42),transparent 22%,transparent 65%,rgba(200,157,56,.12)),
+    linear-gradient(160deg,#c9b889,#7b6b48 75%);
+  border-color:rgba(227,189,99,.72);
+}
+
+.lluvia-objeto.claro .lluvia-botella::after{
+  color:#201b10;
+  border-color:rgba(45,35,16,.42);
+}
+
+.lluvia-objeto.alta .lluvia-botella{
+  border-radius:18% 18% 12% 12%;
+}
+
+.lluvia-objeto.card-objeto{
+  width:var(--w);
+  height:calc(var(--h) * .68);
+}
+
+.lluvia-card{
+  position:absolute;
+  inset:0;
+  border:1px solid rgba(227,189,99,.5);
+  border-radius:9px;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.08),transparent 35%),
+    linear-gradient(145deg,#16120b,#050505);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.025);
+}
+
+.lluvia-card::after{
+  content:"✦  NERÓS";
+  position:absolute;
+  inset:auto 10% 16%;
+  color:#c89d38;
+  font-size:clamp(5px,.5vw,7px);
+  font-weight:900;
+  letter-spacing:1px;
+  text-align:center;
+}
+
+.lluvia-objeto.particula{
+  width:3px;
+  height:3px;
+  border-radius:50%;
+  background:#e3bd63;
+  box-shadow:0 0 10px rgba(227,189,99,.8);
+  filter:none;
+}
+
+.lluvia-objeto.particula::before,
+.lluvia-objeto.particula::after{
+  display:none;
+}
+
+@keyframes nerosRain{
+  0%{
+    opacity:0;
+    transform:translate3d(0,-80px,0) rotate(var(--r));
+  }
+  8%{
+    opacity:var(--op);
+  }
+  52%{
+    opacity:var(--op);
+  }
+  100%{
+    opacity:0;
+    transform:translate3d(var(--drift),115vh,0) rotate(calc(var(--r) + 180deg));
+  }
+}
+
+.preloader-contenido{
+  position:relative;
+  z-index:10;
+}
+
+.preloader-contenido::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:330px;
+  height:330px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(5,5,5,.96) 0%,rgba(5,5,5,.86) 47%,rgba(5,5,5,0) 74%);
+  z-index:-1;
+  pointer-events:none;
+}
+
+@media(max-width:700px){
+  .lluvia-objeto{
+    animation-duration:calc(var(--dur) * .9);
+  }
+  .lluvia-objeto:nth-child(n+18){
+    display:none;
+  }
+  .preloader-contenido::before{
+    width:300px;
+    height:300px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .preloader-lluvia{
+    display:none;
+  }
+}
+
+
 /* ================= PROMO ================= */
 
 .promo-strip{
@@ -5968,6 +6167,52 @@ CARRITO — BENEFICIO TRANSFERENCIA / EFECTIVO DESTACADO
 
 
 <div id="nerosPreloader" aria-label="Cargando catálogo">
+  <div class="preloader-lluvia" aria-hidden="true">
+    <div class="lluvia-objeto" style="--x:3%;--w:58px;--h:92px;--dur:5.8s;--delay:-1.2s;--r:-14deg;--drift:85px;--op:.72;">
+      <div class="lluvia-botella"></div>
+    </div>
+    <div class="lluvia-objeto alta claro" style="--x:12%;--w:38px;--h:108px;--dur:6.6s;--delay:-4.4s;--r:12deg;--drift:-65px;--op:.58;">
+      <div class="lluvia-botella"></div>
+    </div>
+    <div class="lluvia-objeto" style="--x:21%;--w:52px;--h:82px;--dur:7.2s;--delay:-2.8s;--r:22deg;--drift:95px;--op:.64;">
+      <div class="lluvia-botella"></div>
+    </div>
+    <div class="lluvia-objeto card-objeto" style="--x:29%;--w:64px;--h:70px;--dur:6.1s;--delay:-5.2s;--r:-18deg;--drift:-110px;--op:.48;">
+      <div class="lluvia-card"></div>
+    </div>
+    <div class="lluvia-objeto" style="--x:37%;--w:44px;--h:76px;--dur:5.4s;--delay:-.6s;--r:8deg;--drift:75px;--op:.56;">
+      <div class="lluvia-botella"></div>
+    </div>
+    <div class="lluvia-objeto alta" style="--x:45%;--w:35px;--h:104px;--dur:7.8s;--delay:-3.7s;--r:-11deg;--drift:-75px;--op:.48;">
+      <div class="lluvia-botella"></div>
+    </div>
+    <div class="lluvia-objeto" style="--x:53%;--w:57px;--h:88px;--dur:6.4s;--delay:-2.1s;--r:15deg;--drift:100px;--op:.62;">
+      <div class="lluvia-botella"></div>
+    </div>
+    <div class="lluvia-objeto card-objeto claro" style="--x:62%;--w:56px;--h:74px;--dur:5.9s;--delay:-4.9s;--r:17deg;--drift:-90px;--op:.46;">
+      <div class="lluvia-card"></div>
+    </div>
+    <div class="lluvia-objeto" style="--x:70%;--w:46px;--h:80px;--dur:6.9s;--delay:-1.8s;--r:-21deg;--drift:80px;--op:.58;">
+      <div class="lluvia-botella"></div>
+    </div>
+    <div class="lluvia-objeto alta" style="--x:78%;--w:39px;--h:111px;--dur:7.5s;--delay:-5.8s;--r:10deg;--drift:-80px;--op:.52;">
+      <div class="lluvia-botella"></div>
+    </div>
+    <div class="lluvia-objeto" style="--x:87%;--w:58px;--h:92px;--dur:6.2s;--delay:-3.1s;--r:-13deg;--drift:105px;--op:.66;">
+      <div class="lluvia-botella"></div>
+    </div>
+    <div class="lluvia-objeto card-objeto" style="--x:94%;--w:61px;--h:68px;--dur:7s;--delay:-.9s;--r:20deg;--drift:-100px;--op:.44;">
+      <div class="lluvia-card"></div>
+    </div>
+
+    <div class="lluvia-objeto particula" style="--x:8%;--dur:3.7s;--delay:-1.1s;--r:0deg;--drift:35px;--op:.8;"></div>
+    <div class="lluvia-objeto particula" style="--x:18%;--dur:4.9s;--delay:-3.3s;--r:0deg;--drift:-30px;--op:.65;"></div>
+    <div class="lluvia-objeto particula" style="--x:33%;--dur:4.2s;--delay:-2.4s;--r:0deg;--drift:45px;--op:.75;"></div>
+    <div class="lluvia-objeto particula" style="--x:48%;--dur:5.1s;--delay:-4.1s;--r:0deg;--drift:-38px;--op:.6;"></div>
+    <div class="lluvia-objeto particula" style="--x:58%;--dur:3.9s;--delay:-1.9s;--r:0deg;--drift:32px;--op:.8;"></div>
+    <div class="lluvia-objeto particula" style="--x:73%;--dur:4.6s;--delay:-3.8s;--r:0deg;--drift:-42px;--op:.7;"></div>
+    <div class="lluvia-objeto particula" style="--x:84%;--dur:5.3s;--delay:-.7s;--r:0deg;--drift:40px;--op:.65;"></div>
+  </div>
   <div class="preloader-contenido">
     <img
       class="preloader-logo"
