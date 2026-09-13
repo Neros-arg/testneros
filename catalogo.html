@@ -192,13 +192,13 @@ transition:none!important;
 }
 
 
-/* ================= LLUVIA REAL DE PRODUCTOS EN CARGA ================= */
+/* ================= LLUVIA NERÓS EN CARGA ================= */
 
 #nerosPreloader{
   overflow:hidden;
   isolation:isolate;
   background:
-    radial-gradient(circle at 50% 48%,rgba(200,157,56,.08),transparent 28%),
+    radial-gradient(circle at 50% 48%,rgba(200,157,56,.07),transparent 28%),
     radial-gradient(circle at 50% 50%,#10100f 0%,#050505 58%,#020202 100%);
 }
 
@@ -208,112 +208,146 @@ transition:none!important;
   z-index:0;
   overflow:hidden;
   pointer-events:none;
-  perspective:1100px;
+  perspective:900px;
 }
 
 .preloader-lluvia::after{
   content:"";
   position:absolute;
   inset:0;
-  z-index:5;
+  z-index:4;
   background:
-    radial-gradient(circle at 50% 50%,transparent 0%,rgba(5,5,5,.02) 22%,rgba(5,5,5,.48) 70%,rgba(5,5,5,.92) 100%);
+    radial-gradient(circle at 50% 50%,transparent 0%,rgba(5,5,5,.03) 24%,rgba(5,5,5,.52) 72%,rgba(5,5,5,.88) 100%);
   pointer-events:none;
 }
 
 .lluvia-objeto{
   position:absolute;
-  top:-180px;
+  top:-130px;
   left:var(--x);
   width:var(--w);
   height:var(--h);
   opacity:0;
-  transform:
-    translate3d(0,-120px,var(--z))
-    rotate(var(--r));
-  animation:
-    nerosRainReal var(--dur) linear var(--delay) infinite;
+  filter:drop-shadow(0 12px 20px rgba(0,0,0,.55));
+  transform:translate3d(0,0,0) rotate(var(--r));
+  animation:nerosRain var(--dur) linear var(--delay) infinite;
   will-change:transform,opacity;
-  filter:
-    drop-shadow(0 15px 18px rgba(0,0,0,.58))
-    drop-shadow(0 0 7px rgba(200,157,56,.08));
 }
 
-.lluvia-objeto img{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  object-position:center;
-  border-radius:8px;
-  user-select:none;
-  -webkit-user-drag:none;
-  pointer-events:none;
-}
-
-/* Las fotos de producto quedan integradas como pequeñas piezas de lujo */
-.lluvia-objeto::after{
+.lluvia-objeto::before{
   content:"";
   position:absolute;
-  inset:2px;
-  border:1px solid rgba(227,189,99,.16);
-  border-radius:8px;
-  box-shadow:inset 0 0 18px rgba(200,157,56,.06);
-  pointer-events:none;
+  left:50%;
+  top:-12px;
+  width:34%;
+  height:16%;
+  transform:translateX(-50%);
+  border-radius:3px 3px 2px 2px;
+  background:linear-gradient(90deg,#6d5220,#e3bd63,#8f681f);
+  box-shadow:0 0 7px rgba(227,189,99,.18);
 }
 
-.lluvia-objeto.sutil{
-  filter:
-    blur(.15px)
-    drop-shadow(0 13px 18px rgba(0,0,0,.62));
+.lluvia-botella{
+  position:absolute;
+  inset:12% 0 0;
+  border:1px solid rgba(227,189,99,.58);
+  border-radius:13% 13% 18% 18%;
+  background:
+    linear-gradient(105deg,rgba(255,255,255,.18),transparent 18%,transparent 65%,rgba(227,189,99,.09)),
+    linear-gradient(160deg,#171717,#050505 72%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.035),
+    inset 8px 0 18px rgba(255,255,255,.025);
 }
 
-.lluvia-objeto.lejano{
-  filter:
-    blur(1.2px)
-    drop-shadow(0 10px 15px rgba(0,0,0,.55));
+.lluvia-botella::after{
+  content:"N  NERÓS";
+  position:absolute;
+  left:12%;
+  right:12%;
+  top:42%;
+  padding:6px 2px;
+  border-top:1px solid rgba(200,157,56,.5);
+  border-bottom:1px solid rgba(200,157,56,.28);
+  color:#d9b65c;
+  font-family:Georgia,serif;
+  font-size:clamp(5px,.52vw,8px);
+  letter-spacing:1px;
+  text-align:center;
+  white-space:nowrap;
 }
 
-.lluvia-objeto.cerca{
-  filter:
-    drop-shadow(0 20px 28px rgba(0,0,0,.68))
-    drop-shadow(0 0 10px rgba(200,157,56,.10));
+.lluvia-objeto.claro .lluvia-botella{
+  background:
+    linear-gradient(105deg,rgba(255,255,255,.42),transparent 22%,transparent 65%,rgba(200,157,56,.12)),
+    linear-gradient(160deg,#c9b889,#7b6b48 75%);
+  border-color:rgba(227,189,99,.72);
+}
+
+.lluvia-objeto.claro .lluvia-botella::after{
+  color:#201b10;
+  border-color:rgba(45,35,16,.42);
+}
+
+.lluvia-objeto.alta .lluvia-botella{
+  border-radius:18% 18% 12% 12%;
+}
+
+.lluvia-objeto.card-objeto{
+  width:var(--w);
+  height:calc(var(--h) * .68);
+}
+
+.lluvia-card{
+  position:absolute;
+  inset:0;
+  border:1px solid rgba(227,189,99,.5);
+  border-radius:9px;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.08),transparent 35%),
+    linear-gradient(145deg,#16120b,#050505);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.025);
+}
+
+.lluvia-card::after{
+  content:"✦  NERÓS";
+  position:absolute;
+  inset:auto 10% 16%;
+  color:#c89d38;
+  font-size:clamp(5px,.5vw,7px);
+  font-weight:900;
+  letter-spacing:1px;
+  text-align:center;
 }
 
 .lluvia-objeto.particula{
-  width:3px!important;
-  height:3px!important;
+  width:3px;
+  height:3px;
   border-radius:50%;
   background:#e3bd63;
   box-shadow:0 0 10px rgba(227,189,99,.8);
-  filter:none!important;
+  filter:none;
 }
 
+.lluvia-objeto.particula::before,
 .lluvia-objeto.particula::after{
   display:none;
 }
 
-@keyframes nerosRainReal{
+@keyframes nerosRain{
   0%{
     opacity:0;
-    transform:
-      translate3d(0,-140px,var(--z))
-      rotate(var(--r));
+    transform:translate3d(0,-80px,0) rotate(var(--r));
   }
-
-  9%{
+  8%{
     opacity:var(--op);
   }
-
-  48%{
+  52%{
     opacity:var(--op);
   }
-
   100%{
     opacity:0;
-    transform:
-      translate3d(var(--drift),115vh,var(--z))
-      rotate(calc(var(--r) + var(--spin)));
+    transform:translate3d(var(--drift),115vh,0) rotate(calc(var(--r) + 180deg));
   }
 }
 
@@ -327,17 +361,11 @@ transition:none!important;
   position:absolute;
   left:50%;
   top:50%;
-  width:360px;
-  height:360px;
+  width:330px;
+  height:330px;
   transform:translate(-50%,-50%);
   border-radius:50%;
-  background:
-    radial-gradient(
-      circle,
-      rgba(5,5,5,.97) 0%,
-      rgba(5,5,5,.90) 44%,
-      rgba(5,5,5,0) 75%
-    );
+  background:radial-gradient(circle,rgba(5,5,5,.96) 0%,rgba(5,5,5,.86) 47%,rgba(5,5,5,0) 74%);
   z-index:-1;
   pointer-events:none;
 }
@@ -346,14 +374,12 @@ transition:none!important;
   .lluvia-objeto{
     animation-duration:calc(var(--dur) * .9);
   }
-
   .lluvia-objeto:nth-child(n+18){
     display:none;
   }
-
   .preloader-contenido::before{
-    width:310px;
-    height:310px;
+    width:300px;
+    height:300px;
   }
 }
 
@@ -362,6 +388,7 @@ transition:none!important;
     display:none;
   }
 }
+
 
 /* ================= PROMO ================= */
 
@@ -6139,7 +6166,53 @@ CARRITO — BENEFICIO TRANSFERENCIA / EFECTIVO DESTACADO
 <body>
 
 <div id="nerosPreloader" aria-label="Cargando catálogo">
-  <div id="preloaderLluvia" class="preloader-lluvia" aria-hidden="true"></div>
+  <div class="preloader-lluvia" aria-hidden="true">
+    <div class="lluvia-objeto" style="--x:3%;--w:58px;--h:92px;--dur:5.8s;--delay:-1.2s;--r:-14deg;--drift:85px;--op:.72;">
+      <div class="lluvia-botella"></div>
+    </div>
+    <div class="lluvia-objeto alta claro" style="--x:12%;--w:38px;--h:108px;--dur:6.6s;--delay:-4.4s;--r:12deg;--drift:-65px;--op:.58;">
+      <div class="lluvia-botella"></div>
+    </div>
+    <div class="lluvia-objeto" style="--x:21%;--w:52px;--h:82px;--dur:7.2s;--delay:-2.8s;--r:22deg;--drift:95px;--op:.64;">
+      <div class="lluvia-botella"></div>
+    </div>
+    <div class="lluvia-objeto card-objeto" style="--x:29%;--w:64px;--h:70px;--dur:6.1s;--delay:-5.2s;--r:-18deg;--drift:-110px;--op:.48;">
+      <div class="lluvia-card"></div>
+    </div>
+    <div class="lluvia-objeto" style="--x:37%;--w:44px;--h:76px;--dur:5.4s;--delay:-.6s;--r:8deg;--drift:75px;--op:.56;">
+      <div class="lluvia-botella"></div>
+    </div>
+    <div class="lluvia-objeto alta" style="--x:45%;--w:35px;--h:104px;--dur:7.8s;--delay:-3.7s;--r:-11deg;--drift:-75px;--op:.48;">
+      <div class="lluvia-botella"></div>
+    </div>
+    <div class="lluvia-objeto" style="--x:53%;--w:57px;--h:88px;--dur:6.4s;--delay:-2.1s;--r:15deg;--drift:100px;--op:.62;">
+      <div class="lluvia-botella"></div>
+    </div>
+    <div class="lluvia-objeto card-objeto claro" style="--x:62%;--w:56px;--h:74px;--dur:5.9s;--delay:-4.9s;--r:17deg;--drift:-90px;--op:.46;">
+      <div class="lluvia-card"></div>
+    </div>
+    <div class="lluvia-objeto" style="--x:70%;--w:46px;--h:80px;--dur:6.9s;--delay:-1.8s;--r:-21deg;--drift:80px;--op:.58;">
+      <div class="lluvia-botella"></div>
+    </div>
+    <div class="lluvia-objeto alta" style="--x:78%;--w:39px;--h:111px;--dur:7.5s;--delay:-5.8s;--r:10deg;--drift:-80px;--op:.52;">
+      <div class="lluvia-botella"></div>
+    </div>
+    <div class="lluvia-objeto" style="--x:87%;--w:58px;--h:92px;--dur:6.2s;--delay:-3.1s;--r:-13deg;--drift:105px;--op:.66;">
+      <div class="lluvia-botella"></div>
+    </div>
+    <div class="lluvia-objeto card-objeto" style="--x:94%;--w:61px;--h:68px;--dur:7s;--delay:-.9s;--r:20deg;--drift:-100px;--op:.44;">
+      <div class="lluvia-card"></div>
+    </div>
+
+<div class="lluvia-objeto particula" style="--x:8%;--dur:3.7s;--delay:-1.1s;--r:0deg;--drift:35px;--op:.8;"></div>
+<div class="lluvia-objeto particula" style="--x:18%;--dur:4.9s;--delay:-3.3s;--r:0deg;--drift:-30px;--op:.65;"></div>
+<div class="lluvia-objeto particula" style="--x:33%;--dur:4.2s;--delay:-2.4s;--r:0deg;--drift:45px;--op:.75;"></div>
+<div class="lluvia-objeto particula" style="--x:48%;--dur:5.1s;--delay:-4.1s;--r:0deg;--drift:-38px;--op:.6;"></div>
+<div class="lluvia-objeto particula" style="--x:58%;--dur:3.9s;--delay:-1.9s;--r:0deg;--drift:32px;--op:.8;"></div>
+<div class="lluvia-objeto particula" style="--x:73%;--dur:4.6s;--delay:-3.8s;--r:0deg;--drift:-42px;--op:.7;"></div>
+<div class="lluvia-objeto particula" style="--x:84%;--dur:5.3s;--delay:-.7s;--r:0deg;--drift:40px;--op:.65;"></div>
+
+  </div>
   <div class="preloader-contenido">
     <img
       class="preloader-logo"
@@ -7286,217 +7359,6 @@ stock.includes("agotado")
 
 }
 
-function prepararLluviaPerfumes(productos){
-
-const contenedor=
-document.getElementById("preloaderLluvia");
-
-if(!contenedor){
-return;
-}
-
-contenedor.innerHTML="";
-
-const lista=
-(Array.isArray(productos) ? productos : [])
-.filter(producto=>{
-
-const imagen=
-String(
-producto &&
-(producto.foto || producto.imagen) ||
-""
-).trim();
-
-return imagen!=="";
-
-});
-
-if(!lista.length){
-return;
-}
-
-/*
-  Usamos las imágenes REALES del catálogo.
-  Se mezclan para que cada carga tenga una lluvia distinta.
-*/
-const mezclados=[...lista];
-
-for(let i=mezclados.length-1;i>0;i--){
-
-const j=
-Math.floor(
-Math.random()*(i+1)
-);
-
-[mezclados[i],mezclados[j]]=
-[mezclados[j],mezclados[i]];
-
-}
-
-const cantidad=
-window.innerWidth<=700 ? 15 : 24;
-
-const seleccion=
-mezclados.slice(
-0,
-Math.min(cantidad,mezclados.length)
-);
-
-seleccion.forEach((producto,index)=>{
-
-const imagen=
-String(
-producto.foto ||
-producto.imagen ||
-""
-).trim();
-
-const nombre=
-String(
-producto.perfume ||
-producto.nombre ||
-"Perfume NERÓS"
-).trim();
-
-const objeto=
-document.createElement("div");
-
-const cercano=
-Math.random()<.18;
-
-const lejano=
-!cercano && Math.random()<.25;
-
-objeto.className=
-"lluvia-objeto"+
-(cercano ? " cerca" : "")+
-(lejano ? " lejano" : "")+
-(!cercano && !lejano ? " sutil" : "");
-
-const ancho=
-cercano
-? Math.round(65+Math.random()*42)
-: lejano
-? Math.round(30+Math.random()*24)
-: Math.round(40+Math.random()*34);
-
-const alto=
-Math.round(
-ancho*(.95+Math.random()*.55)
-);
-
-const x=
-Math.round(
-Math.random()*96
-);
-
-const dur=
-(5.2+Math.random()*3.8)
-.toFixed(2);
-
-const delay=
-(-Math.random()*7)
-.toFixed(2);
-
-const rotacion=
-Math.round(
--24+Math.random()*48
-);
-
-const drift=
-Math.round(
--110+Math.random()*220
-);
-
-const profundidad=
-Math.round(
--120+Math.random()*180
-);
-
-const giro=
-Math.round(
-110+Math.random()*230
-);
-
-const opacidad=
-(
-cercano
-? .68+Math.random()*.20
-: lejano
-? .28+Math.random()*.22
-: .42+Math.random()*.28
-).toFixed(2);
-
-objeto.style.setProperty("--x",x+"%");
-objeto.style.setProperty("--w",ancho+"px");
-objeto.style.setProperty("--h",alto+"px");
-objeto.style.setProperty("--dur",dur+"s");
-objeto.style.setProperty("--delay",delay+"s");
-objeto.style.setProperty("--r",rotacion+"deg");
-objeto.style.setProperty("--drift",drift+"px");
-objeto.style.setProperty("--z",profundidad+"px");
-objeto.style.setProperty("--spin",giro+"deg");
-objeto.style.setProperty("--op",opacidad);
-
-/*
-  Los objetos alternan su aparición para que no bajen
-  todos en fila ni se sienta repetitivo.
-*/
-if(index % 5 === 0){
-objeto.style.animationTimingFunction=
-"cubic-bezier(.35,.05,.65,1)";
-}
-
-const img=
-document.createElement("img");
-
-img.src=imagen;
-img.alt="";
-img.title=nombre;
-img.loading="eager";
-img.decoding="async";
-
-img.addEventListener(
-"error",
-()=>{
-objeto.remove();
-},
-{once:true}
-);
-
-objeto.appendChild(img);
-contenedor.appendChild(objeto);
-
-});
-
-/* Partículas doradas para completar la sensación de lujo */
-const particulas=
-window.innerWidth<=700 ? 6 : 10;
-
-for(let i=0;i<particulas;i++){
-
-const p=
-document.createElement("div");
-
-p.className=
-"lluvia-objeto particula";
-
-p.style.setProperty("--x",Math.round(Math.random()*98)+"%");
-p.style.setProperty("--dur",(3.2+Math.random()*2.4).toFixed(2)+"s");
-p.style.setProperty("--delay",(-Math.random()*5).toFixed(2)+"s");
-p.style.setProperty("--r","0deg");
-p.style.setProperty("--drift",Math.round(-45+Math.random()*90)+"px");
-p.style.setProperty("--z","-40px");
-p.style.setProperty("--spin","0deg");
-p.style.setProperty("--op",(0.45+Math.random()*.4).toFixed(2));
-
-contenedor.appendChild(p);
-
-}
-
-}
-
 function procesarCatalogo(data){
 
 const catalogoLimpio=
@@ -7504,10 +7366,6 @@ limpiarProductosSinStock(data);
 
 perfumes=
 catalogoLimpio;
-
-prepararLluviaPerfumes(
-catalogoLimpio
-);
 
 calcularPrecioMaximoCatalogo();
 actualizarFiltroPrecioUI();
